@@ -1,5 +1,14 @@
 import Image from 'next/image'
 import styles from './page.module.css'
+import {Metadata} from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    // ... Получение данных с backend
+    title: "MyTop - Наш лучший топ",
+    description: "Generated project Mytop by create next app"
+  };
+}
 
 export default function Home() {
   return (
