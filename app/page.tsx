@@ -1,4 +1,6 @@
 import {Metadata} from "next";
+import {JSX} from "react";
+import {Htag} from "@/components";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -8,6 +10,10 @@ export async function generateMetadata(): Promise<Metadata> {
     };
 }
 
-export default function Home() {
-    return "Hi, Jack";
+export default function Home(): JSX.Element {
+    return (
+        <>
+            <Htag tag="h1">Text test</Htag>
+        </>
+    );
 }

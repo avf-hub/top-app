@@ -16,5 +16,5 @@ export default function RootLayout({
         <html lang="ru">
             <body className={notoSansKR.className}>{children}</body>
         </html>
-    )
+    );
 }
