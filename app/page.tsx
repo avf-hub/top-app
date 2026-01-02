@@ -1,6 +1,6 @@
 import {Metadata} from "next";
 import {JSX} from "react";
-import {Htag} from "@/components";
+import {Button, Htag} from "@/components";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -13,7 +13,9 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function Home(): JSX.Element {
     return (
         <>
-            <Htag tag="h1">Text test</Htag>
+            <Htag tag="h1">Тестовый текст</Htag>
+            <Button appearance="primary">Кнопка primary</Button>
+            <Button appearance="ghost">Кнопка ghost</Button>
         </>
     );
 }
