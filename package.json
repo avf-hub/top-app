@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --webpack",
     "debug": "NODE_OPTIONS='--inspect' next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "next lint",
     "stylelint": "stylelint \"**/*.css\" --fix"
@@ -22,6 +22,7 @@
     "typescript": "5.9.3"
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
     "@typescript-eslint/eslint-plugin": "^8.50.1",
     "@typescript-eslint/parser": "^8.50.1",
     "eslint": "^9.39.2",
