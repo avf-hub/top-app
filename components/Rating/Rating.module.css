@@ -1,9 +1,5 @@
-.filled {
+.filled svg {
     fill: var(--primary);
-}
-
-.star {
-    display: inline-block;
 }
 
 .star svg {
