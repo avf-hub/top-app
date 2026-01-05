@@ -1,5 +1,5 @@
-import './globals.css'
-import {Noto_Sans_KR} from 'next/font/google'
+import "../globals.css";
+import {Noto_Sans_KR} from "next/font/google";
 import {Metadata} from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
