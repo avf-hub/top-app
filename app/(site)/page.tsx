@@ -2,6 +2,7 @@
 import {JSX, useState} from "react";
 import {Button, Htag, Rating, Tag} from "@/components";
 import {withLayout} from "@/app/(site)/components/Layout/Layout";
+import {Menu} from "@/app/(site)/components/Menu/Menu";
 
 function Home(): JSX.Element {
     const [rating, setRating] = useState<number>(4);
@@ -16,6 +17,7 @@ function Home(): JSX.Element {
             <Tag color="primary">Маленький Primary</Tag>
             <Tag size="m" color="green" href="#">Ссылка</Tag>
             <Rating rating={rating} isEditable setRating={setRating}/>
+            <Menu/>
         </>
     );
 }
