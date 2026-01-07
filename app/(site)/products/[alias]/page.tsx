@@ -15,7 +15,7 @@ export default async function PageProducts({params}: {params: {alias: string}}):
     }
     return (
         <div>
-            Страница с alias: {alias.title}
+            {alias.title}
         </div>
     );
 }
