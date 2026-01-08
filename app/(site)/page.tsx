@@ -1,25 +1,25 @@
-"use client";
-import {JSX, useState} from "react";
-import {Button, Htag, Rating, Tag} from "@/components";
-import {withLayout} from "@/app/(site)/components/Layout/Layout";
+import {JSX} from "react";
+import {Metadata} from "next";
+import styles from "@/app/(site)/page.module.css";
+import {Header} from "@/app/(site)/components/Header/Header";
+import {Sidebar} from "@/app/(site)/components/Sidebar/Sidebar";
+import {Footer} from "@/app/(site)/components/Footer/Footer";
 import {Menu} from "@/app/(site)/components/Menu/Menu";
 
-function Home(): JSX.Element {
-    const [rating, setRating] = useState<number>(4);
+export const metadata: Metadata = {
+    title: "Главная страница"
+};
 
+export default function Home(): JSX.Element {
     return (
-        <>
-            <Htag tag="h1">Заголовок</Htag>
-            <Button appearance="primary" arrow="right">Кнопка primary</Button>
-            <Button appearance="ghost" arrow="down">Кнопка ghost</Button>
-            <Tag>Маленький Ghost</Tag>
-            <Tag size="m" color="red">Большой Red</Tag>
-            <Tag color="primary">Маленький Primary</Tag>
-            <Tag size="m" color="green" href="#">Ссылка</Tag>
-            <Rating rating={rating} isEditable setRating={setRating}/>
-            <Menu/>
-        </>
+        <div className={styles.wrapper}>
+            <Header className={styles.header}/>
+            <Sidebar className={styles.sidebar}/>
+            <div className={styles.body}>
+                Главная страница
+                <Menu />
+            </div>
+            <Footer className={styles.footer}/>
+        </div>
     );
 }
-
-export default withLayout(Home);
