@@ -12,7 +12,6 @@
 
 .footer a:-webkit-any-link {
     color: var(--white);
-    text-decoration: none;
 }
 
 .footer a:hover {
