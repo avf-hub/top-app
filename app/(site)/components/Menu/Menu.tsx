@@ -8,6 +8,7 @@ import ProductsIcon from "./icons/products.svg";
 import {TopLevelCategory} from "@/interfaces/page.interface";
 import styles from "./Menu.module.css";
 import cn from "classnames";
+import Link from "next/dist/client/link";
 
 const firstLevelCategory: FirstLeveMenuItem[] = [
     {route: "courses", name: "Курсы", icon: <CoursesIcon/>, id: TopLevelCategory.Courses},
@@ -25,7 +26,7 @@ export async function Menu(): Promise<JSX.Element> {
             <>
                 {firstLevelCategory.map(m => (
                     <div key={m.route}>
-                        <a href={`/${m.route}`}>
+                        <Link href={`/${m.route}`}>
                             <div className={cn(styles.firstLevel, {
                                 [styles.firstLevelActive]: m.id === firstCategory
                             })
@@ -33,7 +34,7 @@ export async function Menu(): Promise<JSX.Element> {
                                 {m.icon}
                                 <span>{m.name}</span>
                             </div>
-                        </a>
+                        </Link>
                         {m.id === firstCategory && buildSecondLevel(m)}
                     </div>
                 ))}
@@ -61,11 +62,13 @@ export async function Menu(): Promise<JSX.Element> {
     const buildThirdLevel = (pages: PageItem[], route: string) => {
         return (
             pages.map(page => (
-                <a href={`/${route}/${page.alias}`} className={cn(styles.thirdLevel, {
-                    [styles.thirdLevelActive]: false
-                })}>
-                    {page.category}
-                </a>
+                <div key={page.alias}>
+                    <Link href={`/${route}/${page.alias}`} className={cn(styles.thirdLevel, {
+                        [styles.thirdLevelActive]: false
+                    })}>
+                        {page.category}
+                    </Link>
+                </div>
             ))
         );
     };
