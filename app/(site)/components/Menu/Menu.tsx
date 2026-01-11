@@ -1,27 +1,25 @@
 "use client";
 import {FirstLeveMenuItem, PageItem} from "@/interfaces/menu.interface";
 import {JSX, useContext} from "react";
-import CoursesIcon from "./icons/courses.svg";
-import ServicesIcon from "./icons/services.svg";
-import BooksIcon from "./icons/books.svg";
-import ProductsIcon from "./icons/products.svg";
-import {TopLevelCategory} from "@/interfaces/page.interface";
 import styles from "./Menu.module.css";
 import cn from "classnames";
 import Link from "next/dist/client/link";
 import {AppContext} from "@/context/app.context";
-import { usePathname } from 'next/navigation';
-
-const firstLevelCategory: FirstLeveMenuItem[] = [
-    {route: "courses", name: "Курсы", icon: <CoursesIcon/>, id: TopLevelCategory.Courses},
-    {route: "services", name: "Сервисы", icon: <ServicesIcon/>, id: TopLevelCategory.Services},
-    {route: "books", name: "Книги", icon: <BooksIcon/>, id: TopLevelCategory.Books},
-    {route: "products", name: "Продукты", icon: <ProductsIcon/>, id: TopLevelCategory.Products}
-];
+import {usePathname} from "next/navigation";
+import {firstLevelCategory} from "@/helpers/helpers";
 
 export function Menu(): JSX.Element {
     const {menu, setMenu, firstCategory} = useContext(AppContext);
     const pathname: string = usePathname();
+
+    const openSecondLevel = (secondCategory: string) => {
+        setMenu && setMenu(menu.map(m => {
+            if (m._id.secondCategory === secondCategory) {
+                m.isOpened = !m.isOpened;
+            }
+            return m;
+        }));
+    };
 
     const buildFirstLevel = () => {
         return (
@@ -53,7 +51,7 @@ export function Menu(): JSX.Element {
                     }
                     return (
                         <div key={m._id.secondCategory}>
-                            <div className={styles.secondLevel}>{m._id.secondCategory}</div>
+                            <div className={styles.secondLevel} onClick={() => openSecondLevel(m._id.secondCategory)}>{m._id.secondCategory}</div>
                             <div className={cn(styles.secondLevelBlock, {
                                 [styles.secondLevelBlockOpened]: m.isOpened
                             })}>
