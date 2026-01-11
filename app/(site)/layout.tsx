@@ -7,6 +7,7 @@ import {Sidebar} from "@/app/(site)/components/Sidebar/Sidebar";
 import {Footer} from "@/app/(site)/components/Footer/Footer";
 import {AppContextProvider} from "@/context/app.context";
 import {getMenu} from "@/api/menu";
+import {TopLevelCategory} from "@/interfaces/page.interface";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -23,7 +24,7 @@ const notoSansKR = Noto_Sans_KR({
 });
 
 export default async function RootLayout({children}: { children: React.ReactNode }) {
-    const firstCategory: number = 0;
+    const firstCategory: number = TopLevelCategory.Courses;
     const menu = await getMenu(firstCategory);
     return (
         <html lang="ru">
