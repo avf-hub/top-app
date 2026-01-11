@@ -1,6 +1,12 @@
 import "../globals.css";
 import {Noto_Sans_KR} from "next/font/google";
 import {Metadata} from "next";
+import styles from "@/app/(site)/layout.module.css";
+import {Header} from "@/app/(site)/components/Header/Header";
+import {Sidebar} from "@/app/(site)/components/Sidebar/Sidebar";
+import {Footer} from "@/app/(site)/components/Footer/Footer";
+import {AppContextProvider} from "@/context/app.context";
+import {getMenu} from "@/api/menu";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -16,14 +22,23 @@ const notoSansKR = Noto_Sans_KR({
     display: "swap"
 });
 
-export default function RootLayout({
-                                       children,
-                                   }: {
-    children: React.ReactNode
-}) {
+export default async function RootLayout({children}: { children: React.ReactNode }) {
+    const firstCategory: number = 0;
+    const menu = await getMenu(firstCategory);
     return (
         <html lang="ru">
-            <body className={notoSansKR.className}>{children}</body>
+        <body className={notoSansKR.className}>
+        <AppContextProvider menu={menu} firstCategory={firstCategory}>
+            <div className={styles.wrapper}>
+                <Header className={styles.header}/>
+                <Sidebar className={styles.sidebar}/>
+                <div className={styles.body}>
+                    {children}
+                </div>
+                <Footer className={styles.footer}/>
+            </div>
+        </AppContextProvider>
+        </body>
         </html>
     );
 }

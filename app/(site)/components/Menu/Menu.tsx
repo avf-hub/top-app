@@ -1,6 +1,6 @@
-import {FirstLeveMenuItem, MenuItem, PageItem} from "@/interfaces/menu.interface";
-import {getMenu} from "@/api/menu";
-import {JSX} from "react";
+"use client";
+import {FirstLeveMenuItem, PageItem} from "@/interfaces/menu.interface";
+import {JSX, useContext} from "react";
 import CoursesIcon from "./icons/courses.svg";
 import ServicesIcon from "./icons/services.svg";
 import BooksIcon from "./icons/books.svg";
@@ -9,6 +9,8 @@ import {TopLevelCategory} from "@/interfaces/page.interface";
 import styles from "./Menu.module.css";
 import cn from "classnames";
 import Link from "next/dist/client/link";
+import {AppContext} from "@/context/app.context";
+import { usePathname } from 'next/navigation';
 
 const firstLevelCategory: FirstLeveMenuItem[] = [
     {route: "courses", name: "Курсы", icon: <CoursesIcon/>, id: TopLevelCategory.Courses},
@@ -17,9 +19,9 @@ const firstLevelCategory: FirstLeveMenuItem[] = [
     {route: "products", name: "Продукты", icon: <ProductsIcon/>, id: TopLevelCategory.Products}
 ];
 
-export async function Menu(): Promise<JSX.Element> {
-    const firstCategory: number = 0;
-    const menu: MenuItem[] = await getMenu(firstCategory);
+export function Menu(): JSX.Element {
+    const {menu, setMenu, firstCategory} = useContext(AppContext);
+    const pathname: string = usePathname();
 
     const buildFirstLevel = () => {
         return (
@@ -45,16 +47,21 @@ export async function Menu(): Promise<JSX.Element> {
     const buildSecondLevel = (menuItem: FirstLeveMenuItem) => {
         return (
             <div className={styles.secondBlock}>
-                {menu.map(m => (
-                    <div key={m._id.secondCategory}>
-                        <div className={styles.secondLevel}>{m._id.secondCategory}</div>
-                        <div className={cn(styles.secondLevelBlock, {
-                            [styles.secondLevelBlockOpened]: m.isOpened
-                        })}>
-                            {buildThirdLevel(m.pages, menuItem.route)}
+                {menu.map(m => {
+                    if (m.pages.map(p => p.alias).includes(pathname.split("/")[2])) {
+                        m.isOpened = true;
+                    }
+                    return (
+                        <div key={m._id.secondCategory}>
+                            <div className={styles.secondLevel}>{m._id.secondCategory}</div>
+                            <div className={cn(styles.secondLevelBlock, {
+                                [styles.secondLevelBlockOpened]: m.isOpened
+                            })}>
+                                {buildThirdLevel(m.pages, menuItem.route)}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    )
+                })}
             </div>
         );
     };
@@ -64,7 +71,7 @@ export async function Menu(): Promise<JSX.Element> {
             pages.map(page => (
                 <div key={page.alias}>
                     <Link href={`/${route}/${page.alias}`} className={cn(styles.thirdLevel, {
-                        [styles.thirdLevelActive]: false
+                        [styles.thirdLevelActive]: `/${route}/${page.alias}` === pathname
                     })}>
                         {page.category}
                     </Link>
