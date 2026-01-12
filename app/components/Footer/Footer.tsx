@@ -1,5 +1,5 @@
 import {JSX} from "react";
-import {SidebarProps} from "@/app/(site)/components/Sidebar/Sidebar.props";
+import {SidebarProps} from "@/app/components/Sidebar/Sidebar.props";
 import styles from "./Footer.module.css";
 import cn from "classnames";
 import {format} from "date-fns";
