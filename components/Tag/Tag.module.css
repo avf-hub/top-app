@@ -21,7 +21,7 @@
 }
 
 .ghost {
-    border: 1px solid var(--gray-lite);
+    border: 1px solid var(--gray-light);
 }
 
 .red {
@@ -40,7 +40,7 @@
 
 .green {
     color: var(--green);
-    background: var(--gray-lite);
+    background: var(--gray-light);
 
     font-weight: bold;
 }
