@@ -3,6 +3,7 @@ import styles from "./HhData.module.css";
 import {HhDataProps} from "@/components/HhData/HhData.props";
 import {Card} from "@/components";
 import RateIcon from "./rate.svg";
+import {priceRu} from "@/helpers/helpers";
 
 export const HhData = ({count, juniorSalary, middleSalary, seniorSalary}: HhDataProps): JSX.Element => {
     return (
@@ -14,7 +15,7 @@ export const HhData = ({count, juniorSalary, middleSalary, seniorSalary}: HhData
             <Card className={styles.salary}>
                 <div>
                     <div className={styles.title}>Начальный</div>
-                    <div className={styles.salaryValue}>{juniorSalary ?? 0}</div>
+                    <div className={styles.salaryValue}>{priceRu(juniorSalary) ?? 0}</div>
                     <div className={styles.rate}>
                         <RateIcon className={styles.filled}/>
                         <RateIcon/>
@@ -23,7 +24,7 @@ export const HhData = ({count, juniorSalary, middleSalary, seniorSalary}: HhData
                 </div>
                 <div>
                     <div className={styles.title}>Средний</div>
-                    <div className={styles.salaryValue}>{middleSalary ?? 0}</div>
+                    <div className={styles.salaryValue}>{priceRu(middleSalary) ?? 0}</div>
                     <div className={styles.rate}>
                         <RateIcon className={styles.filled}/>
                         <RateIcon className={styles.filled}/>
@@ -32,7 +33,7 @@ export const HhData = ({count, juniorSalary, middleSalary, seniorSalary}: HhData
                 </div>
                 <div>
                     <div className={styles.title}>Профессионал</div>
-                    <div className={styles.salaryValue}>{seniorSalary ?? 0}</div>
+                    <div className={styles.salaryValue}>{priceRu(seniorSalary) ?? 0}</div>
                     <div className={styles.rate}>
                         <RateIcon className={styles.filled}/>
                         <RateIcon className={styles.filled}/>
