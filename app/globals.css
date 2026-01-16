@@ -9,7 +9,7 @@
     --red: #FC836D;
     --green: #1DC37E;
     --green-light: #C8F8E4;
-    --font-family: "Noto Sans KR", sans-serif;
+    --font-family: "Noto Sans KR";
 }
 
 * {
@@ -19,7 +19,7 @@
 html, body {
     margin: 0;
     padding: 0;
-    font-family: "Noto Sans KR", sans-serif;
+    font-family: var(--font-family), sans-serif;
     color: var(--black);
     background: #F5F6F8;
 }
