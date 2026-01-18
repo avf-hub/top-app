@@ -3,7 +3,7 @@ import styles from "./Product.module.css";
 import cn from "classnames";
 import {ProductProps} from "@/components/Product/Product.props";
 import {Button, Card, Divider, Rating, Tag} from "@/components";
-import {priceRu} from "@/helpers/helpers";
+import {declOfNum, priceRu} from "@/helpers/helpers";
 
 export const Product = ({product, className, ...props}: ProductProps): JSX.Element => {
     return (
@@ -22,10 +22,18 @@ export const Product = ({product, className, ...props}: ProductProps): JSX.Eleme
             <div className={styles.tags}>{product.categories.map(cat => <Tag key={cat} className={styles.category}>{cat}</Tag>)}</div>
             <div className={styles.priceTitle}>цена</div>
             <div className={styles.creditTitle}>кредит</div>
-            <div className={styles.ratingTitle}>{product.reviewCount} отзывов</div>
+            <div className={styles.ratingTitle}>{product.reviewCount} {declOfNum(product.reviewCount, ["отзыв", "отзыва", "отзывов"])}</div>
             <div className={styles.hr}><Divider/></div>
             <div className={styles.description}>{product.description}</div>
-            <div className={styles.feature}>фичи</div>
+            <div className={styles.feature}>
+                {product.characteristics.map(c => (
+                    <div className={styles.characteristics} key={c.name}>
+                        <span className={styles.characteristicsName}>{c.name}</span>
+                        <span className={styles.characteristicsDots}></span>
+                        <span className={styles.characteristicsValue}>{c.value}</span>
+                    </div>
+                ))}
+            </div>
             <div className={styles.advBlock}>
                 {product.advantages && <div className={styles.advantages}>
                     <div className={styles.advTitle}>Преимущества</div>
