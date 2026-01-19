@@ -1,5 +1,6 @@
 import {JSX} from "react";
 import styles from "./Product.module.css";
+import cn from "classnames";
 import {ProductProps} from "@/components/Product/Product.props";
 import {Button, Card, Divider, Rating, Tag} from "@/components";
 import {declOfNum, priceRu} from "@/helpers/helpers";
@@ -49,7 +50,7 @@ export const Product = ({product, className, ...props}: ProductProps): JSX.Eleme
                     <div>{product.disadvantages}</div>
                 </div>}
             </div>
-            <div className={styles.hr}><Divider/></div>
+            <div className={cn(styles.hr, styles.hr2)}><Divider/></div>
             <div className={styles.actions}>
                 <Button appearance="primary">Узнать подробнее</Button>
                 <Button appearance="ghost" arrow="right" className={styles.reviewButton}>Читать отзывы</Button>
