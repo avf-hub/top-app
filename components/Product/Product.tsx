@@ -1,28 +1,33 @@
 import {JSX} from "react";
 import styles from "./Product.module.css";
-import cn from "classnames";
 import {ProductProps} from "@/components/Product/Product.props";
 import {Button, Card, Divider, Rating, Tag} from "@/components";
 import {declOfNum, priceRu} from "@/helpers/helpers";
+import Image from "next/image";
 
 export const Product = ({product, className, ...props}: ProductProps): JSX.Element => {
     return (
         <Card className={styles.product}>
-            <div className={styles.logo}><img src={product.image} alt={product.title} /></div>
+            <div className={styles.logo}>
+                <Image src={product.image} alt={product.title} width={70} height={70}/>
+            </div>
             <div className={styles.title}>{product.title}</div>
             <div className={styles.price}>
                 {priceRu(product.price)}
-                {product.oldPrice && <Tag className={styles.oldPrice} color="green">{priceRu(product.price - product.oldPrice)}</Tag>}
+                {product.oldPrice &&
+                    <Tag className={styles.oldPrice} color="green">{priceRu(product.price - product.oldPrice)}</Tag>}
             </div>
             <div className={styles.credit}>
                 {priceRu(product.credit)}
                 <span className={styles.month}>/мес</span>
             </div>
-            <div className={styles.rating}><Rating rating={product.reviewAvg ?? product.initialRating} /></div>
-            <div className={styles.tags}>{product.categories.map(cat => <Tag key={cat} className={styles.category}>{cat}</Tag>)}</div>
+            <div className={styles.rating}><Rating rating={product.reviewAvg ?? product.initialRating}/></div>
+            <div className={styles.tags}>{product.categories.map(cat => <Tag key={cat}
+                                                                             className={styles.category}>{cat}</Tag>)}</div>
             <div className={styles.priceTitle}>цена</div>
             <div className={styles.creditTitle}>кредит</div>
-            <div className={styles.ratingTitle}>{product.reviewCount} {declOfNum(product.reviewCount, ["отзыв", "отзыва", "отзывов"])}</div>
+            <div
+                className={styles.ratingTitle}>{product.reviewCount} {declOfNum(product.reviewCount, ["отзыв", "отзыва", "отзывов"])}</div>
             <div className={styles.hr}><Divider/></div>
             <div className={styles.description}>{product.description}</div>
             <div className={styles.feature}>
