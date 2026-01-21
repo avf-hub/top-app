@@ -51,7 +51,8 @@ export function Menu(): JSX.Element {
                     }
                     return (
                         <div key={m._id.secondCategory}>
-                            <div className={styles.secondLevel} onClick={() => openSecondLevel(m._id.secondCategory)}>{m._id.secondCategory}</div>
+                            <div className={styles.secondLevel}
+                                 onClick={() => openSecondLevel(m._id.secondCategory)}>{m._id.secondCategory}</div>
                             <div className={cn(styles.secondLevelBlock, {
                                 [styles.secondLevelBlockOpened]: m.isOpened
                             })}>
@@ -67,13 +68,11 @@ export function Menu(): JSX.Element {
     const buildThirdLevel = (pages: PageItem[], route: string) => {
         return (
             pages.map(page => (
-                <div key={page.alias}>
-                    <Link href={`/${route}/${page.alias}`} className={cn(styles.thirdLevel, {
-                        [styles.thirdLevelActive]: `/${route}/${page.alias}` === pathname
-                    })}>
-                        {page.category}
-                    </Link>
-                </div>
+                <Link key={page._id} href={`/${route}/${page.alias}`} className={cn(styles.thirdLevel, {
+                    [styles.thirdLevelActive]: `/${route}/${page.alias}` === pathname
+                })}>
+                    {page.category}
+                </Link>
             ))
         );
     };
