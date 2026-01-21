@@ -3,7 +3,7 @@ import {JSX, useState} from "react";
 import styles from "./Product.module.css";
 import cn from "classnames";
 import {ProductProps} from "@/components/Product/Product.props";
-import {Button, Card, Divider, Rating, Review, Tag} from "@/components";
+import {Button, Card, Divider, Rating, Review, ReviewForm, Tag} from "@/components";
 import {declOfNum, priceRu} from "@/helpers/helpers";
 import Image from "next/image";
 
@@ -70,7 +70,13 @@ export const Product = ({product, className, ...props}: ProductProps): JSX.Eleme
                 [styles.opened]: isReviewOpened,
                 [styles.closed]: !isReviewOpened
             })}>
-                {product.reviews.map(r => (<Review key={r._id} review={r}/>))}
+                {product.reviews.map(r => (
+                    <div key={r._id}>
+                        <Review key={r._id} review={r}/>
+                        <Divider/>
+                    </div>
+                ))}
+                <ReviewForm productId={product._id}/>
             </Card>
         </>
     );
