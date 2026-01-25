@@ -8,6 +8,7 @@ import {Footer} from "@/app/components/Footer/Footer";
 import {AppContextProvider} from "@/context/app.context";
 import {getMenu} from "@/api/menu";
 import {TopLevelCategory} from "@/interfaces/page.interface";
+import {Up} from "@/components";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -37,6 +38,7 @@ export default async function RootLayout({children}: { children: React.ReactNode
                     {children}
                 </div>
                 <Footer className={styles.footer}/>
+                <Up/>
             </div>
         </AppContextProvider>
         </body>
