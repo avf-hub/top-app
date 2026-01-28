@@ -33,14 +33,14 @@
 
 .grey {
     color: var(--white);
-    background: #B3C0D9;
+    background: #8A99B7;
 
     font-weight: bold;
 }
 
 .green {
     color: var(--green);
-    background: var(--gray-light);
+    background: var(--green-light);
 
     font-weight: bold;
 }
