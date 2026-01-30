@@ -10,7 +10,7 @@ import {Controller, useForm} from "react-hook-form";
 import {ReviewFormInterface} from "@/components/ReviewForm/ReviewForm.interface";
 import {createDemo} from "@/api/demo";
 
-export const ReviewForm = ({productId, className, ...props}: ReviewFormProps): JSX.Element => {
+export const ReviewForm = ({productId, isOpened, className, ...props}: ReviewFormProps): JSX.Element => {
     const {register, control, handleSubmit, formState: {errors}, reset} = useForm<ReviewFormInterface>();
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [error, setError] = useState<string>();
@@ -40,12 +40,14 @@ export const ReviewForm = ({productId, className, ...props}: ReviewFormProps): J
                     placeholder="Имя"
                     {...register("name", {required: {value: true, message: "Заполните имя"}})}
                     error={errors.name}
+                    tabIndex={isOpened ? 0 : -1}
                 />
                 <Input
                     placeholder="Заголовок отзыва"
                     className={styles.title}
                     {...register("title", {required: {value: true, message: "Заполните заголовок"}})}
                     error={errors.title}
+                    tabIndex={isOpened ? 0 : -1}
                 />
                 <div className={styles.rating}>
                     <span>Оценка:</span>
@@ -60,6 +62,7 @@ export const ReviewForm = ({productId, className, ...props}: ReviewFormProps): J
                                 setRating={field.onChange}
                                 ref={field.ref}
                                 error={errors.rating}
+                                tabIndex={isOpened ? 0 : -1}
                             />
                         )}/>
                 </div>
@@ -68,9 +71,10 @@ export const ReviewForm = ({productId, className, ...props}: ReviewFormProps): J
                     placeholder="Текст отзыва"
                     {...register("description", {required: {value: true, message: "Заполните описание"}})}
                     error={errors.description}
+                    tabIndex={isOpened ? 0 : -1}
                 />
                 <div className={styles.submit}>
-                    <Button appearance="primary">Отправить</Button>
+                    <Button appearance="primary" tabIndex={isOpened ? 0 : -1}>Отправить</Button>
                     <span
                         className={styles.info}>* Перед публикацией отзыв пройдёт предварительную модерацию и проверку</span>
                 </div>
@@ -78,7 +82,7 @@ export const ReviewForm = ({productId, className, ...props}: ReviewFormProps): J
             {isSuccess && <div className={cn(styles.panel, styles.success)}>
                 <div className={styles.successTitle}>Ваш отзыв отправлен</div>
                 <div>Спасибо, ваш отзыв будет опубликован после проверки.</div>
-                <CloseIcon className={styles.close} onClick={() => setIsSuccess(false)} />
+                <CloseIcon className={styles.close} onClick={() => setIsSuccess(false)}/>
             </div>}
 
             {error && <div className={cn(styles.panel, styles.error)}>
