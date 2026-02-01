@@ -1,24 +1,24 @@
 "use client";
 
-import {ForwardedRef, forwardRef, JSX, useRef, useState} from "react";
+import { ForwardedRef, forwardRef, JSX, useRef, useState } from "react";
 import styles from "./Product.module.css";
 import cn from "classnames";
-import {ProductProps} from "@/components/Product/Product.props";
-import {Button, Card, Divider, Rating, Review, ReviewForm, Tag} from "@/components";
-import {declOfNum, priceRu} from "@/helpers/helpers";
+import { ProductProps } from "@/components/Product/Product.props";
+import { Button, Card, Divider, Rating, Review, ReviewForm, Tag } from "@/components";
+import { declOfNum, priceRu } from "@/helpers/helpers";
 import Image from "next/image";
-import {motion} from "framer-motion";
+import { motion } from "framer-motion";
 
 export const Product = motion(forwardRef((
-    {product, className, ...props}: ProductProps,
+    { product, className, ...props }: ProductProps,
     ref: ForwardedRef<HTMLDivElement>
 ): JSX.Element => {
     const [isReviewOpened, setIsReviewOpened] = useState<boolean>(false);
     const reviewRef = useRef<HTMLDivElement>(null);
 
     const variants = {
-        visible: {opacity: 1, height: "auto"},
-        hidden: {opacity: 0, height: 0}
+        visible: { opacity: 1, height: "auto" },
+        hidden: { opacity: 0, height: 0 }
     };
 
     const scrollToReview = () => {
@@ -34,30 +34,33 @@ export const Product = motion(forwardRef((
         <div className={className} ref={ref} {...props}>
             <Card className={styles.product}>
                 <div className={styles.logo}>
-                    <Image src={product.image} alt={product.title} width={70} height={70}/>
+                    <Image src={product.image} alt={product.title} width={70} height={70} />
                 </div>
                 <div className={styles.title}>{product.title}</div>
                 <div className={styles.price}>
-                    {priceRu(product.price)}
+                    <span><span className="visualyHidden">цена</span>{priceRu(product.price)}</span>
                     {product.oldPrice &&
                         <Tag className={styles.oldPrice}
-                             color="green">{priceRu(product.price - product.oldPrice)}</Tag>}
+                            color="green"><span className="visualyHidden">скидка</span>{priceRu(product.price - product.oldPrice)}</Tag>}
                 </div>
                 <div className={styles.credit}>
-                    {priceRu(product.credit)}
+                    <span className="visualyHidden">кредит</span>{priceRu(product.credit)}
                     <span className={styles.month}>/мес</span>
                 </div>
-                <div className={styles.rating}><Rating rating={product.reviewAvg ?? product.initialRating}/></div>
+                <div className={styles.rating}>
+                    <span className="visualyHidden">{"рейтинг " + (product.reviewAvg ?? product.initialRating)}</span>
+                    <Rating rating={product.reviewAvg ?? product.initialRating} />
+                </div>
                 <div className={styles.tags}>{product.categories.map(cat => <Tag key={cat}
-                                                                                 className={styles.category}>{cat}</Tag>)}</div>
-                <div className={styles.priceTitle}>цена</div>
-                <div className={styles.creditTitle}>кредит</div>
+                    className={styles.category}>{cat}</Tag>)}</div>
+                <div className={styles.priceTitle} aria-hidden={true}>цена</div>
+                <div className={styles.creditTitle} aria-hidden={true}>кредит</div>
                 <div className={styles.ratingTitle}>
                     <a href="#" onClick={scrollToReview}>
                         {product.reviewCount} {declOfNum(product.reviewCount, ["отзыв", "отзыва", "отзывов"])}
                     </a>
                 </div>
-                <div className={styles.hr}><Divider/></div>
+                <div className={styles.hr}><Divider /></div>
                 <div className={styles.description}>{product.description}</div>
                 <div className={styles.feature}>
                     {product.characteristics.map(c => (
@@ -78,7 +81,7 @@ export const Product = motion(forwardRef((
                         <div>{product.disadvantages}</div>
                     </div>}
                 </div>
-                <div className={cn(styles.hr, styles.hr2)}><Divider/></div>
+                <div className={cn(styles.hr, styles.hr2)}><Divider /></div>
                 <div className={styles.actions}>
                     <Button appearance="primary">Узнать подробнее</Button>
                     <Button
@@ -93,11 +96,11 @@ export const Product = motion(forwardRef((
                 <Card color="blue" className={styles.reviews} ref={reviewRef} tabIndex={isReviewOpened ? 0 : -1}>
                     {product.reviews.map(r => (
                         <div key={r._id}>
-                            <Review review={r}/>
-                            <Divider/>
+                            <Review review={r} />
+                            <Divider />
                         </div>
                     ))}
-                    <ReviewForm productId={product._id} isOpened={isReviewOpened}/>
+                    <ReviewForm productId={product._id} isOpened={isReviewOpened} />
                 </Card>
             </motion.div>
         </div>
