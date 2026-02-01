@@ -1,13 +1,13 @@
 "use client";
-import {ChangeEvent, JSX, useState, KeyboardEvent} from "react";
+import { ChangeEvent, JSX, useState, KeyboardEvent } from "react";
 import styles from "./Search.module.css";
 import cn from "classnames";
-import {SearchProps} from "@/components/Search/Search.props";
-import {Button, Input} from "@/components";
+import { SearchProps } from "@/components/Search/Search.props";
+import { Button, Input } from "@/components";
 import GlassIcon from "./glass.svg";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
-export const Search = ({className, ...props}: SearchProps): JSX.Element => {
+export const Search = ({ className, ...props }: SearchProps): JSX.Element => {
     const [search, setSearch] = useState<string>("");
     const router = useRouter();
 
@@ -34,8 +34,9 @@ export const Search = ({className, ...props}: SearchProps): JSX.Element => {
                 appearance="primary"
                 className={styles.button}
                 onClick={goToSearch}
+                aria-label="Искать по сайту"
             >
-                <GlassIcon/>
+                <GlassIcon />
             </Button>
         </div>
     );
