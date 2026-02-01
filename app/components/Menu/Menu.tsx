@@ -1,17 +1,17 @@
 "use client";
 
-import {FirstLeveMenuItem, PageItem} from "@/interfaces/menu.interface";
-import {JSX, KeyboardEvent, useContext} from "react";
+import { FirstLeveMenuItem, PageItem } from "@/interfaces/menu.interface";
+import { JSX, KeyboardEvent, useContext } from "react";
 import styles from "./Menu.module.css";
 import cn from "classnames";
 import Link from "next/dist/client/link";
-import {AppContext} from "@/context/app.context";
-import {usePathname} from "next/navigation";
-import {firstLevelCategory} from "@/helpers/helpers";
-import {motion} from "framer-motion";
+import { AppContext } from "@/context/app.context";
+import { usePathname } from "next/navigation";
+import { firstLevelCategory } from "@/helpers/helpers";
+import { motion } from "framer-motion";
 
 export function Menu(): JSX.Element {
-    const {menu, setMenu, firstCategory} = useContext(AppContext);
+    const { menu, setMenu, firstCategory } = useContext(AppContext);
     const pathname: string = usePathname();
 
     const variants = {
@@ -22,12 +22,12 @@ export function Menu(): JSX.Element {
                 staggerChildren: 0.1
             }
         },
-        hidden: {marginBottom: 0}
+        hidden: { marginBottom: 0 }
     };
 
     const variantsChildren = {
-        visible: {opacity: 1, height: 29},
-        hidden: {opacity: 0, height: 0}
+        visible: { opacity: 1, height: 29 },
+        hidden: { opacity: 0, height: 0 }
     };
 
     const openSecondLevel = (secondCategory: string) => {
@@ -113,8 +113,8 @@ export function Menu(): JSX.Element {
     };
 
     return (
-        <div className={styles.menu}>
+        <nav className={styles.menu} role="navigation">
             {buildFirstLevel()}
-        </div>
+        </nav>
     );
 }

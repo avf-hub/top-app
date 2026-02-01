@@ -1,15 +1,15 @@
 "use client";
 
-import {JSX, KeyboardEvent, useRef, useState} from "react";
+import { JSX, KeyboardEvent, useRef, useState } from "react";
 import styles from "./Main.module.css";
-import {Header} from "@/app/components/Header/Header";
-import {Sidebar} from "@/app/components/Sidebar/Sidebar";
-import {Footer} from "@/app/components/Footer/Footer";
+import { Header } from "@/app/components/Header/Header";
+import { Sidebar } from "@/app/components/Sidebar/Sidebar";
+import { Footer } from "@/app/components/Footer/Footer";
 import cn from "classnames";
-import {Up} from "@/components";
-import {MainProps} from "@/app/components/Main/Main.props";
+import { Up } from "@/components";
+import { MainProps } from "@/app/components/Main/Main.props";
 
-export const Main = ({children, className, ...props}: MainProps): JSX.Element => {
+export const Main = ({ children, className, ...props }: MainProps): JSX.Element => {
     const [isSkipLinkDisplayed, setIsSkipLinkDisplayed] = useState<boolean>(false);
     const bodyRef = useRef<HTMLDivElement>(null);
 
@@ -31,13 +31,13 @@ export const Main = ({children, className, ...props}: MainProps): JSX.Element =>
                 })}
                 onKeyDown={skipContentAction}
             >Сразу к содержанию</a>
-            <Header className={styles.header}/>
-            <Sidebar className={styles.sidebar}/>
-            <div className={styles.body} ref={bodyRef} tabIndex={0}>
+            <Header className={styles.header} />
+            <Sidebar className={styles.sidebar} />
+            <main className={styles.body} ref={bodyRef} tabIndex={0} role="main">
                 {children}
-            </div>
-            <Footer className={styles.footer}/>
-            <Up/>
+            </main>
+            <Footer className={styles.footer} />
+            <Up />
         </div>
     );
 }
