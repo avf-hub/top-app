@@ -1,23 +1,23 @@
 "use client";
 
-import {JSX, useState} from "react";
+import { JSX, useState } from "react";
 import styles from "./ReviewForm.module.css";
 import cn from "classnames";
-import {ReviewFormProps} from "@/components/ReviewForm/ReviewForm.props";
-import {Button, Input, Rating, Textarea} from "@/components";
+import { ReviewFormProps } from "@/components/ReviewForm/ReviewForm.props";
+import { Button, Input, Rating, Textarea } from "@/components";
 import CloseIcon from "./close.svg";
-import {Controller, useForm} from "react-hook-form";
-import {ReviewFormInterface} from "@/components/ReviewForm/ReviewForm.interface";
-import {createDemo} from "@/api/demo";
+import { Controller, useForm } from "react-hook-form";
+import { ReviewFormInterface } from "@/components/ReviewForm/ReviewForm.interface";
+import { createDemo } from "@/api/demo";
 
-export const ReviewForm = ({productId, isOpened, className, ...props}: ReviewFormProps): JSX.Element => {
-    const {register, control, handleSubmit, formState: {errors}, reset} = useForm<ReviewFormInterface>();
+export const ReviewForm = ({ productId, isOpened, className, ...props }: ReviewFormProps): JSX.Element => {
+    const { register, control, handleSubmit, formState: { errors }, reset, clearErrors } = useForm<ReviewFormInterface>();
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [error, setError] = useState<string>();
 
     const onSubmit = async (formData: ReviewFormInterface) => {
         try {
-            const {message} = await createDemo(formData, productId);
+            const { message } = await createDemo(formData, productId);
             if (message) {
                 setIsSuccess(true);
                 reset();
@@ -38,24 +38,26 @@ export const ReviewForm = ({productId, isOpened, className, ...props}: ReviewFor
             <div className={cn(styles.reviewFrom, className)} {...props}>
                 <Input
                     placeholder="Имя"
-                    {...register("name", {required: {value: true, message: "Заполните имя"}})}
+                    {...register("name", { required: { value: true, message: "Заполните имя" } })}
                     error={errors.name}
                     tabIndex={isOpened ? 0 : -1}
+                    aria-invalid={errors.name ? true : false}
                 />
                 <Input
                     placeholder="Заголовок отзыва"
                     className={styles.title}
-                    {...register("title", {required: {value: true, message: "Заполните заголовок"}})}
+                    {...register("title", { required: { value: true, message: "Заполните заголовок" } })}
                     error={errors.title}
                     tabIndex={isOpened ? 0 : -1}
+                    aria-invalid={errors.title ? true : false}
                 />
                 <div className={styles.rating}>
                     <span>Оценка:</span>
                     <Controller
                         control={control}
                         name={"rating"}
-                        rules={{required: {value: true, message: "Укажите рейтинг"}}}
-                        render={({field}) => (
+                        rules={{ required: { value: true, message: "Укажите рейтинг" } }}
+                        render={({ field }) => (
                             <Rating
                                 isEditable
                                 rating={field.value}
@@ -64,17 +66,19 @@ export const ReviewForm = ({productId, isOpened, className, ...props}: ReviewFor
                                 error={errors.rating}
                                 tabIndex={isOpened ? 0 : -1}
                             />
-                        )}/>
+                        )} />
                 </div>
                 <Textarea
                     className={styles.description}
                     placeholder="Текст отзыва"
-                    {...register("description", {required: {value: true, message: "Заполните описание"}})}
+                    {...register("description", { required: { value: true, message: "Заполните описание" } })}
                     error={errors.description}
                     tabIndex={isOpened ? 0 : -1}
+                    aria-label="Текст отзыва"
+                    aria-invalid={errors.description ? true : false}
                 />
                 <div className={styles.submit}>
-                    <Button appearance="primary" tabIndex={isOpened ? 0 : -1}>Отправить</Button>
+                    <Button appearance="primary" tabIndex={isOpened ? 0 : -1} onClick={() => clearErrors()}>Отправить</Button>
                     <span
                         className={styles.info}>* Перед публикацией отзыв пройдёт предварительную модерацию и проверку</span>
                 </div>
@@ -82,12 +86,12 @@ export const ReviewForm = ({productId, isOpened, className, ...props}: ReviewFor
             {isSuccess && <div className={cn(styles.panel, styles.success)}>
                 <div className={styles.successTitle}>Ваш отзыв отправлен</div>
                 <div>Спасибо, ваш отзыв будет опубликован после проверки.</div>
-                <CloseIcon className={styles.close} onClick={() => setIsSuccess(false)}/>
+                <CloseIcon className={styles.close} onClick={() => setIsSuccess(false)} />
             </div>}
 
             {error && <div className={cn(styles.panel, styles.error)}>
                 {error}
-                <CloseIcon className={styles.close} onClick={() => setError(undefined)}/>
+                <CloseIcon className={styles.close} onClick={() => setError(undefined)} />
             </div>}
         </form>
     );

@@ -1,19 +1,19 @@
 "use client";
 
-import {ForwardedRef, forwardRef, JSX, KeyboardEvent, useEffect, useRef, useState} from "react";
-import {RatingProps} from "@/components/Rating/Rating.props";
+import { ForwardedRef, forwardRef, JSX, KeyboardEvent, useEffect, useRef, useState } from "react";
+import { RatingProps } from "@/components/Rating/Rating.props";
 import styles from "./Rating.module.css";
 import cn from "classnames";
 import StarIcon from "./star.svg";
 
 export const Rating = forwardRef(({
-                                      isEditable = false,
-                                      error,
-                                      rating,
-                                      setRating,
-                                      tabIndex,
-                                      ...props
-                                  }: RatingProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element => {
+    isEditable = false,
+    error,
+    rating,
+    setRating,
+    tabIndex,
+    ...props
+}: RatingProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element => {
     const [ratingArray, setRatingArray] = useState<JSX.Element[]>(new Array(5).fill(<></>));
     const ratingArrayRef = useRef<(HTMLSpanElement | null)[]>([]);
 
@@ -41,18 +41,24 @@ export const Rating = forwardRef(({
                     [styles.filled]: i < currentRating,
                     [styles.editable]: isEditable
                 })}
-                      onMouseEnter={() => changeDisplay(i + 1)}
-                      onMouseLeave={() => changeDisplay(rating)}
-                      onClick={() => onClick(i + 1)}
-                      tabIndex={computeFocus(rating, i)}
-                      onKeyDown={handleKey}
-                      ref={r => {
-                          if (ratingArrayRef.current) {
-                              ratingArrayRef.current.push(r)
-                          }
-                      }}
+                    onMouseEnter={() => changeDisplay(i + 1)}
+                    onMouseLeave={() => changeDisplay(rating)}
+                    onClick={() => onClick(i + 1)}
+                    tabIndex={computeFocus(rating, i)}
+                    onKeyDown={handleKey}
+                    ref={r => {
+                        if (ratingArrayRef.current) {
+                            ratingArrayRef.current.push(r)
+                        }
+                    }}
+                    role={isEditable ? "slider" : ""}
+                    aria-valuenow={rating}
+                    aria-valuemax={5}
+                    aria-label={isEditable ? "Укажите рейтинг" : ("рейтинг" + rating)}
+                    aria-valuemin={1}
+                    aria-invalid={error ? true : false}
                 >
-                    <StarIcon/>
+                    <StarIcon />
                 </span>
             );
         });
@@ -97,6 +103,6 @@ export const Rating = forwardRef(({
         [styles.error]: error
     })} {...props}>
         {ratingArray.map((r, i) => (<span key={i}>{r}</span>))}
-        {error && <span className={styles.errorMessage}>{error.message}</span>}
+        {error && <span role="alert" className={styles.errorMessage}>{error.message}</span>}
     </div>);
 });
