@@ -8,17 +8,18 @@ import Link from "next/dist/client/link";
 import { AppContext } from "@/context/app.context";
 import { usePathname } from "next/navigation";
 import { firstLevelCategory } from "@/helpers/helpers";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export function Menu(): JSX.Element {
     const { menu, setMenu, firstCategory } = useContext(AppContext);
     const [announce, setAnnounce] = useState<"closed" | "opened" | undefined>();
+    const shouldReduceMotion: boolean | null = useReducedMotion();
     const pathname: string = usePathname();
 
     const variants = {
         visible: {
             marginBottom: 20,
-            transition: {
+            transition: shouldReduceMotion ? {} : {
                 when: "beforeChildren",
                 staggerChildren: 0.1
             }
@@ -28,7 +29,7 @@ export function Menu(): JSX.Element {
 
     const variantsChildren = {
         visible: { opacity: 1, height: 29 },
-        hidden: { opacity: 0, height: 0 }
+        hidden: { opacity: shouldReduceMotion ? 1 : 0, height: 0 }
     };
 
     const openSecondLevel = (secondCategory: string) => {

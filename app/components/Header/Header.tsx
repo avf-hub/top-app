@@ -1,18 +1,19 @@
 "use client";
 
-import {JSX, useEffect, useState} from "react";
-import {HeaderProps} from "@/app/components/Header/Header.props";
+import { JSX, useEffect, useState } from "react";
+import { HeaderProps } from "@/app/components/Header/Header.props";
 import cn from "classnames";
 import styles from "./Header.module.css";
 import Logo from "@/app/logo.svg";
-import {ButtonIcon} from "@/components";
-import {motion} from "framer-motion";
-import {Sidebar} from "@/app/components/Sidebar/Sidebar";
-import {useRouter} from "next/navigation";
-import {AppRouterInstance} from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { ButtonIcon } from "@/components";
+import { motion, useReducedMotion } from "framer-motion";
+import { Sidebar } from "@/app/components/Sidebar/Sidebar";
+import { useRouter } from "next/navigation";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-export const Header = ({className, ...props}: HeaderProps): JSX.Element => {
+export const Header = ({ className, ...props }: HeaderProps): JSX.Element => {
     const [isOpened, setIsOpened] = useState<boolean>(false);
+    const shouldReduceMotion: boolean | null = useReducedMotion();
     const router: AppRouterInstance = useRouter();
 
     useEffect(() => {
@@ -28,24 +29,24 @@ export const Header = ({className, ...props}: HeaderProps): JSX.Element => {
             }
         },
         closed: {
-            opacity: 0,
+            opacity: shouldReduceMotion ? 1 : 0,
             x: "100%"
         }
     };
 
     return (
         <header className={cn(className, styles.header)} {...props}>
-            <Logo/>
-            <ButtonIcon icon="menu" appearance="white" onClick={() => setIsOpened(true)}/>
+            <Logo />
+            <ButtonIcon icon="menu" appearance="white" onClick={() => setIsOpened(true)} />
             <motion.div
                 className={styles.mobileMenu}
                 variants={variants}
                 initial="closed"
                 animate={isOpened ? "opened" : "closed"}
             >
-                <Sidebar/>
+                <Sidebar />
                 <ButtonIcon className={styles.menuClose} icon="close" appearance="white"
-                            onClick={() => setIsOpened(false)}/>
+                    onClick={() => setIsOpened(false)} />
             </motion.div>
         </header>
     );
