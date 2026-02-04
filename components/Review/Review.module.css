@@ -21,7 +21,7 @@
     grid-column: start / end;
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (width <= 640px) {
     .review {
         grid-template-columns: [start] 30px [titleend] auto [dateend] 1fr [end];
     }
@@ -35,7 +35,7 @@
     }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (width <= 480px) {
     .rating {
         grid-column: start / end;
     }

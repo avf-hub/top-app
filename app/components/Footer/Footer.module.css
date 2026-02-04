@@ -1,16 +1,19 @@
 .footer {
     display: grid;
-    grid-template-columns: 1fr auto auto;
-    gap: 10px 40px;
+
+    padding: 25px 30px;
+
     color: var(--white);
-    font-size: 16px;
-    line-height: 20px;
 
     background: var(--primary);
-    padding: 25px 30px;
+
+    font-size: 16px;
+    line-height: 20px;
+    grid-template-columns: 1fr auto auto;
+    gap: 10px 40px;
 }
 
-.footer a:-webkit-any-link {
+.footer a:any-link {
     color: var(--white);
 }
 
@@ -18,7 +21,7 @@
     color: var(--gray-light);
 }
 
-@media (max-width: 765px) {
+@media (width <= 765px) {
     .footer {
         grid-template-columns: 1fr;
     }

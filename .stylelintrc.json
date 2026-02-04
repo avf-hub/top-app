@@ -7,9 +7,18 @@
 		"stylelint-order"
 	],
 	"rules": {
-		"indentation": [
-			"tab"
+		"at-rule-no-unknown": [
+			true,
+			{
+				"ignoreAtRules": [
+					"tailwind",
+					"apply",
+					"variants",
+					"responsive",
+					"screen"
+				]
+			}
 		],
-		"@stylistic/color-hex-case": "upper"
+		"selector-class-pattern": "^[a-zA-Z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*$"
 	}
 }
