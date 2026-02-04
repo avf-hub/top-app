@@ -5,6 +5,8 @@ import { getMenu } from "@/api/menu";
 import { TopLevelCategory } from "@/interfaces/page.interface";
 import { Metadata } from "next";
 import { Main } from "@/app/components/Main/Main";
+import YandexMetrica from "@/components/YandexMetrica/YandexMetrica";
+import { Suspense } from "react";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -33,6 +35,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <html lang="ru">
             <body className={notoSansKR.className}>
                 <AppContextProvider menu={menu} firstCategory={firstCategory}>
+                    <Suspense><YandexMetrica /></Suspense>
                     <Main children={children} />
                 </AppContextProvider>
             </body>
