@@ -1,17 +1,28 @@
-import {Metadata} from "next";
-import React from "react";
-import {getPage} from "@/api/page";
-import {getMenu} from "@/api/menu";
-import {notFound} from "next/dist/client/components/not-found";
-import {MenuItem} from "@/interfaces/menu.interface";
-import {firstLevelCategory} from "@/helpers/helpers";
-import {TopPageComponent} from "@/app/page-components";
-import {getProducts} from "@/api/products";
-import {TopLevelCategory} from "@/interfaces/page.interface";
+import { getPage } from "@/api/page";
+import { getMenu } from "@/api/menu";
+import { notFound } from "next/dist/client/components/not-found";
+import { MenuItem } from "@/interfaces/menu.interface";
+import { firstLevelCategory } from "@/helpers/helpers";
+import { TopPageComponent } from "@/app/page-components";
+import { getProducts } from "@/api/products";
+import { TopLevelCategory, TopPageModel } from "@/interfaces/page.interface";
+import { Metadata } from "next";
 
-export const metadata: Metadata = {
-    title: "Страница"
-};
+export async function generateMetadata({ params }: TopPageProps): Promise<Metadata> {
+    const resolvedParams = await params;
+    const page: TopPageModel | null = await getPage(resolvedParams.alias);
+
+    return {
+        title: page?.metaTitle,
+        description: page?.metaDescription,
+        openGraph: {
+            title: page?.metaTitle,
+            description: page?.metaDescription,
+            type: "article",
+            url: page?.alias
+        }
+    };
+}
 
 // Типы параметров
 interface TopPageParams {
@@ -28,12 +39,12 @@ export async function generateStaticParams(): Promise<TopPageParams[]> {
 
     for (const flc of firstLevelCategory) {
         const menu: MenuItem[] = await getMenu(flc.id);
-        params.concat(menu.flatMap(item => item.pages.map(page => ({type: flc.route, alias: page.alias}))));
+        params.concat(menu.flatMap(item => item.pages.map(page => ({ type: flc.route, alias: page.alias }))));
     }
     return params;
 }
 
-export default async function TopPage({params}: TopPageProps) {
+export default async function TopPage({ params }: TopPageProps) {
     const resolvedParams = await params;
     const firstCategory: TopLevelCategory | undefined = firstLevelCategory.find(category => category.route === resolvedParams.type)?.id;
     if (firstCategory === undefined) {
@@ -45,7 +56,5 @@ export default async function TopPage({params}: TopPageProps) {
     }
     const products = await getProducts(page.category, 10);
 
-    return (
-        <TopPageComponent firstCategory={firstCategory} page={page} products={products}/>
-    );
+    return (<TopPageComponent firstCategory={firstCategory} page={page} products={products} />);
 }

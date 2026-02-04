@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --webpack",
-    "debug": "NODE_OPTIONS='--inspect' next dev",
+    "debug": "NODE_OPTIONS='--inspect' next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
     "lint": "next lint",
