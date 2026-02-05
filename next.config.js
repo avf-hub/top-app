@@ -14,7 +14,8 @@ const nextConfig = {
             use: ["@svgr/webpack"]
         });
         return config;
-    }
+    },
+    output: "export"
 }
 
 module.exports = nextConfig
