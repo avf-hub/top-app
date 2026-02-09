@@ -21,7 +21,7 @@ export default function YandexMetrika() {
 	return (
 		<Script id="metrika">
 			// Необходимо вставить рабочий ключ в переменную key
-			{/* {`
+			{`
         (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
         m[i].l=1*new Date();
         for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
@@ -34,7 +34,7 @@ export default function YandexMetrika() {
           trackLinks:true,
           accurateTrackBounce:true
         });    
-      `} */}
+      `}
 		</Script>
 	);
 }

@@ -39,7 +39,7 @@ export async function generateStaticParams(): Promise<TopPageParams[]> {
 
     for (const flc of firstLevelCategory) {
         const menu: MenuItem[] = await getMenu(flc.id);
-        params.concat(menu.flatMap(item => item.pages.map(page => ({ type: flc.route, alias: page.alias }))));
+        menu.flatMap(item => item.pages.map(page => params.push({ type: flc.route, alias: page.alias })));
     }
     return params;
 }
