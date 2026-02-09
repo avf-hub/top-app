@@ -1,17 +1,17 @@
 "use client";
 
-import {JSX, useEffect} from "react";
+import { JSX, useEffect } from "react";
 import styles from "./Up.module.css";
-import {useScrollY} from "@/hooks/useScrollY";
-import {motion, useAnimation} from "framer-motion";
-import {ButtonIcon} from "@/components";
+import { useScrollY } from "@/hooks/useScrollY";
+import { motion, useAnimation } from "framer-motion";
+import { ButtonIcon } from "@/components";
 
 export const Up = (): JSX.Element => {
     const controls = useAnimation();
     const y: number = useScrollY();
 
     useEffect(() => {
-        controls.start({opacity: y / document.body.scrollHeight});
+        controls.start({ opacity: y / document.body.scrollHeight });
     }, [y, controls]);
 
     const scrollToTop = () => {
@@ -25,9 +25,9 @@ export const Up = (): JSX.Element => {
         <motion.div
             className={styles.up}
             animate={controls}
-            initial={{opacity: 0}}
+            initial={{ opacity: 0 }}
         >
-            <ButtonIcon icon="up" appearance="primary" onClick={scrollToTop} />
+            <ButtonIcon icon="up" appearance="primary" aria-label="Наверх" onClick={scrollToTop} />
         </motion.div>
     );
 };

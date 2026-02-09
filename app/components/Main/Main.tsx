@@ -25,7 +25,7 @@ export const Main = ({ children, className, ...props }: MainProps): JSX.Element 
         <div className={cn(className, styles.wrapper)} {...props}>
             <a
                 onFocus={() => setIsSkipLinkDisplayed(true)}
-                tabIndex={1}
+                tabIndex={0}
                 className={cn(styles.skipLink, {
                     [styles.displayed]: isSkipLinkDisplayed
                 })}
